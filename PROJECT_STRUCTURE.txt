@@ -1,0 +1,30 @@
+.
+├── CHECKLIST.md
+├── DEPLOYMENT_GUIDE.md
+├── HOW_TO_GET_CODE.md
+├── PROJECT_STRUCTURE.txt
+├── QUICKSTART.md
+├── README.md
+├── backend
+│   ├── requirements.txt
+│   └── server.py
+├── frontend
+│   ├── README.md
+│   ├── components.json
+│   ├── craco.config.js
+│   ├── jsconfig.json
+│   ├── package.json
+│   ├── plugins
+│   ├── postcss.config.js
+│   ├── public
+│   ├── src
+│   ├── tailwind.config.js
+│   ├── vercel.json
+│   └── yarn.lock
+├── model.patch
+├── test_result.md
+├── tests
+│   └── __init__.py
+└── yarn.lock
+
+7 directories, 21 files

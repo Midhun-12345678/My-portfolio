@@ -145,7 +145,7 @@ export const projectsData = [
     impact: "50% faster processing",
     metrics: "Enhanced 1000+ resumes",
     hasDemo: true,
-    githubUrl: "https://github.com/Midhun-12345678/AI-Resume-Enhancer-Agent-",
+    githubUrl: "https://github.com/Midhun-12345678/AI-Resume-Enhancer-Agent",
     image: "https://images.unsplash.com/photo-1557562645-4eee56b29bc1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHw0fHxtYWNoaW5lJTIwbGVhcm5pbmd8ZW58MHx8fHwxNzY3MzQ1NDAzfDA&ixlib=rb-4.1.0&q=85",
     featured: true
   },

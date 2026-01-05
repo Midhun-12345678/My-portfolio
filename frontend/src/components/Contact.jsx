@@ -15,6 +15,7 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -25,7 +26,8 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    setIsSubmitting(true);
+
     const sendMessage = async () => {
       try {
         const response = await fetch('http://localhost:8000/api/contact', {
@@ -41,9 +43,9 @@ const Contact = () => {
         }
 
         toast({
-          title: "Message Sent!",
-          description: "Thank you for reaching out. I'll get back to you soon.",
-          duration: 5000,
+          title: "Message sent",
+          description: "Thanks for your message. I'll get back to you soon.",
+          duration: 4000,
         });
 
         setFormData({
@@ -60,6 +62,8 @@ const Contact = () => {
           duration: 5000,
           variant: "destructive",
         });
+      } finally {
+        setIsSubmitting(false);
       }
     };
 
@@ -165,10 +169,11 @@ const Contact = () => {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-cyan-400 hover:bg-cyan-500 text-black font-semibold py-6 transition-all duration-300 hover:scale-105"
+                  disabled={isSubmitting}
+                  className="w-full bg-cyan-400 hover:bg-cyan-500 disabled:opacity-70 disabled:cursor-not-allowed text-black font-semibold py-6 transition-all duration-300 hover:scale-105"
                 >
                   <Send size={18} className="mr-2" />
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
             </CardContent>

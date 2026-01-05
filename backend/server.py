@@ -90,7 +90,7 @@ async def submit_contact(message: ContactMessage):
         logger.error("CONTACT_RECIPIENT_EMAIL is not set")
         raise HTTPException(status_code=500, detail="Contact is not configured")
 
-    # Store message in MongoDB for backup/audit
+    # Store message in MongoDB for backup/audit (best-effort only)
     doc = {
         "id": str(uuid.uuid4()),
         "name": message.name,
@@ -99,7 +99,10 @@ async def submit_contact(message: ContactMessage):
         "message": message.message,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
-    await db.contact_messages.insert_one(doc)
+    try:
+        await db.contact_messages.insert_one(doc)
+    except Exception as exc:
+        logger.warning("Failed to store contact message in MongoDB: %s", exc)
 
     # Prepare email content
     body = (

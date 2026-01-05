@@ -26,20 +26,44 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Mock form submission
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon.",
-      duration: 5000,
-    });
+    const sendMessage = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
 
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
+        if (!response.ok) {
+          throw new Error('Failed to send message');
+        }
+
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for reaching out. I'll get back to you soon.",
+          duration: 5000,
+        });
+
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } catch (error) {
+        console.error(error);
+        toast({
+          title: "Something went wrong",
+          description: "Unable to send your message right now. Please try again later.",
+          duration: 5000,
+          variant: "destructive",
+        });
+      }
+    };
+
+    sendMessage();
   };
 
   const contactInfo = [

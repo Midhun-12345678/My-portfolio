@@ -130,11 +130,20 @@ const Projects = () => {
                 </div>
 
                 <div className="flex gap-4">
-                  <Button className="flex-1 bg-cyan-400 hover:bg-cyan-500 text-black font-semibold">
-                    <ExternalLink size={16} className="mr-2" />
-                    View Demo
-                  </Button>
-                  <Button variant="outline" className="flex-1 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black">
+                  {selectedProject.hasDemo && (
+                    <Button className="flex-1 bg-cyan-400 hover:bg-cyan-500 text-black font-semibold">
+                      <ExternalLink size={16} className="mr-2" />
+                      View Demo
+                    </Button>
+                  )}
+                  <Button
+                    variant="outline"
+                    className="flex-1 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black"
+                    onClick={() =>
+                      selectedProject.githubUrl &&
+                      window.open(selectedProject.githubUrl, '_blank', 'noopener,noreferrer')
+                    }
+                  >
                     <Github size={16} className="mr-2" />
                     View Code
                   </Button>

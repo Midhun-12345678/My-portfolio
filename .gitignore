@@ -60,3 +60,9 @@ frontend/.env
 # System files
 .supervisord.pid
 .supervisord.log
+
+node_modules/
+.env
+.env.*
+dist/
+build/

@@ -116,18 +116,32 @@ export const experienceData = [
 export const projectsData = [
   {
     id: 1,
+    title: "Real-Time Fraud Detection API",
+    description: "Production-ready fraud detection system with 99%+ accuracy, featuring real-time predictions, RESTful API, transaction history tracking, and model interpretability using SHAP values.",
+    techStack: ["FastAPI", "Scikit-learn", "XGBoost", "Imbalanced-learn", "Pandas", "SQLite", "Render"],
+    impact: "99%+ accuracy in fraud prediction",
+    metrics: "Real-time API with SMOTE-based class imbalance handling",
+    hasDemo: true,
+    demoUrl: "https://fraud-detection-api-q410.onrender.com/",
+    githubUrl: "https://github.com/Midhun-12345678/Fraud-Detection-Application-",
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwxfHxmcmF1ZCUyMGRldGVjdGlvbnxlbnwwfHx8fDE3Njc1MDA4MDB8MA&ixlib=rb-4.1.0&q=85",
+    featured: true
+  },
+  {
+    id: 2,
     title: "Goal-Based Agentic AI Assistant",
     description: "Intelligent AI system that autonomously achieves user-defined goals through multi-step reasoning and action execution.",
     techStack: ["Python", "LangChain", "GPT-4", "FastAPI", "Docker"],
     impact: "40% reduction in response time",
     metrics: "Improved task completion by 65%",
     hasDemo: true,
-    githubUrl: "https://github.com/Midhun-12345678/Goal-Based-Agentic-AI.git",
+    demoUrl: "https://multi-agentic-ai-system-8ewvtbmztmvxvrdrpoeccm.streamlit.app/",
+    githubUrl: "https://github.com/Midhun-12345678/Multi-Agentic-AI-System",
     image: "https://images.unsplash.com/photo-1694903110330-cc64b7e1d21d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwzfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDB8fHx8MTc2NzMzNTY2MHww&ixlib=rb-4.1.0&q=85",
     featured: true
   },
   {
-    id: 2,
+    id: 3,
     title: "Real-Time Audio & Multimodal Processing",
     description: "Advanced system for processing audio streams and images in real-time with AI-powered transcription and analysis.",
     techStack: ["Whisper", "OpenCV", "TensorFlow", "WebRTC", "Redis"],
@@ -138,7 +152,7 @@ export const projectsData = [
     featured: true
   },
   {
-    id: 3,
+    id: 4,
     title: "AI Resume Enhancer Agent",
     description: "Automated system that analyzes and enhances resumes using NLP and generative AI for better job matching.",
     techStack: ["Hugging Face", "SpaCy", "GPT-3.5", "Flask", "MongoDB"],
@@ -150,7 +164,7 @@ export const projectsData = [
     featured: true
   },
   {
-    id: 4,
+    id: 5,
     title: "AI-Powered Document Requirement Extractor",
     description: "Intelligent system that automatically extracts and categorizes requirements from technical documents using NLP.",
     techStack: ["BERT", "PyTorch", "FastAPI", "PostgreSQL", "Docker"],
@@ -161,7 +175,7 @@ export const projectsData = [
     featured: false
   },
   {
-    id: 5,
+    id: 6,
     title: "Employee Sentiment Analysis & AI Review Response",
     description: "Comprehensive system for analyzing employee sentiment and generating contextual AI-powered responses.",
     techStack: ["Transformers", "Scikit-learn", "Power BI", "Azure", "SQL"],

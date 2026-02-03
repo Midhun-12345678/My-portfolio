@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Moon, Sun } from 'lucide-react';
+import { Menu, X, Moon, Sun, Download } from 'lucide-react';
 import { Button } from './ui/button';
 
 const Navigation = () => {
@@ -21,11 +21,20 @@ const Navigation = () => {
     { name: 'Skills', id: 'skills' },
     { name: 'Experience', id: 'experience' },
     { name: 'Projects', id: 'projects' },
-    { name: 'Contact', id: 'contact' }
+    { name: 'Contact', id: 'contact' },
+    { name: 'Resume', id: 'resume', isDownload: true }
   ];
 
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToSection = (id, isDownload) => {
+    if (isDownload) {
+      // Trigger download
+      const link = document.createElement('a');
+      link.href = '/Midhun_M_Resume.pdf';
+      link.download = 'Midhun_M_Resume.pdf';
+      link.click();
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    }
     setIsOpen(false);
   };
 
@@ -57,10 +66,11 @@ const Navigation = () => {
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-gray-300 hover:text-cyan-400 transition-colors font-medium relative group"
+                onClick={() => scrollToSection(item.id, item.isDownload)}
+                className="text-gray-300 hover:text-cyan-400 transition-colors font-medium relative group flex items-center gap-1"
               >
                 {item.name}
+                {item.isDownload && <Download size={16} />}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 group-hover:w-full transition-all duration-300"></span>
               </button>
             ))}
@@ -93,10 +103,11 @@ const Navigation = () => {
               {navItems.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="text-left text-gray-300 hover:text-cyan-400 transition-colors font-medium py-2 px-4 hover:bg-gray-800 rounded-lg"
+                  onClick={() => scrollToSection(item.id, item.isDownload)}
+                  className="text-left text-gray-300 hover:text-cyan-400 transition-colors font-medium py-2 px-4 hover:bg-gray-800 rounded-lg flex items-center gap-2"
                 >
                   {item.name}
+                  {item.isDownload && <Download size={16} />}
                 </button>
               ))}
               

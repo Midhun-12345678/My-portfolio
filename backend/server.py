@@ -11,6 +11,7 @@ import uuid
 from datetime import datetime, timezone
 import smtplib
 from email.mime.text import MIMEText
+from contextlib import asynccontextmanager
 
 
 ROOT_DIR = Path(__file__).parent
@@ -21,8 +22,27 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app without a prefix
-app = FastAPI()
+# Configure logging (moved before lifespan)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+
+# Lifespan context manager (replaces on_event)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup: nothing needed for MongoDB client (already initialized)
+    logger.info("Application startup")
+    yield
+    # Shutdown: close MongoDB client
+    logger.info("Closing MongoDB connection")
+    client.close()
+
+
+# Create the main app with lifespan
+app = FastAPI(lifespan=lifespan)
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
@@ -152,13 +172,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

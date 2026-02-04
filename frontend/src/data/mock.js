@@ -14,7 +14,7 @@ export const profileData = {
 };
 
 export const metricsData = [
-  { value: "1+", label: "Years Experience" },
+  { value: "2", label: "Years Experience" },
   { value: "5+", label: "Projects Delivered" },
   { value: "3", label: "Internships" },
   { value: "3", label: "Certifications" }
@@ -191,19 +191,32 @@ export const certificationsData = [
   {
     id: 1,
     title: "Python for Data Science",
-    issuer: "Certification Authority",
-    date: "2023"
+    issuer: "Learnbay",
+    date: "2024"
   },
   {
     id: 2,
-    title: "Statistics & Machine Learning for Data Science",
-    issuer: "Certification Authority",
-    date: "2023"
+    title: "Data Science and AI Generation",
+    issuer: "Learnbay",
+    date: "2024"
   },
   {
     id: 3,
-    title: "Generative AI",
-    issuer: "Certification Authority",
+    title: "Natural Language Processing with Transformers",
+    issuer: "HuggingFace NLP Course",
+    date: "2024"
+  },
+  {
+    id: 4,
+    title: "Deep Learning Specialization",
+    issuer: "Andrew Ng (Coursera)",
+    date: "2024"
+  },
+  {
+    id: 5,
+    title: "MLOps Fundamentals",
+    issuer: "Model Deployment & Monitoring",
     date: "2024"
   }
+  
 ];

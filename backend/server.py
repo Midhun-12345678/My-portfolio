@@ -1,7 +1,6 @@
 from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
-from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 from pathlib import Path
@@ -17,12 +16,7 @@ from contextlib import asynccontextmanager
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
-
-# Configure logging (moved before lifespan)
+# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -33,12 +27,11 @@ logger = logging.getLogger(__name__)
 # Lifespan context manager (replaces on_event)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: nothing needed for MongoDB client (already initialized)
+    # Startup
     logger.info("Application startup")
     yield
-    # Shutdown: close MongoDB client
-    logger.info("Closing MongoDB connection")
-    client.close()
+    # Shutdown
+    logger.info("Application shutdown")
 
 
 # Create the main app with lifespan
@@ -49,17 +42,6 @@ api_router = APIRouter(prefix="/api")
 
 
 # Define Models
-class StatusCheck(BaseModel):
-    model_config = ConfigDict(extra="ignore")  # Ignore MongoDB's _id field
-    
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-
-class StatusCheckCreate(BaseModel):
-    client_name: str
-
-
 class ContactMessage(BaseModel):
     name: str
     email: EmailStr
@@ -70,30 +52,6 @@ class ContactMessage(BaseModel):
 @api_router.get("/")
 async def root():
     return {"message": "Hello World"}
-
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.model_dump()
-    status_obj = StatusCheck(**status_dict)
-    
-    # Convert to dict and serialize datetime to ISO string for MongoDB
-    doc = status_obj.model_dump()
-    doc['timestamp'] = doc['timestamp'].isoformat()
-    
-    _ = await db.status_checks.insert_one(doc)
-    return status_obj
-
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    # Exclude MongoDB's _id field from the query results
-    status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
-    
-    # Convert ISO string timestamps back to datetime objects
-    for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
-    
-    return status_checks
 
 
 @api_router.post("/contact")
@@ -109,20 +67,6 @@ async def submit_contact(message: ContactMessage):
     if not recipient:
         logger.error("CONTACT_RECIPIENT_EMAIL is not set")
         raise HTTPException(status_code=500, detail="Contact is not configured")
-
-    # Store message in MongoDB for backup/audit (best-effort only)
-    doc = {
-        "id": str(uuid.uuid4()),
-        "name": message.name,
-        "email": message.email,
-        "subject": message.subject,
-        "message": message.message,
-        "created_at": datetime.now(timezone.utc).isoformat(),
-    }
-    try:
-        await db.contact_messages.insert_one(doc)
-    except Exception as exc:
-        logger.warning("Failed to store contact message in MongoDB: %s", exc)
 
     # Prepare email content
     body = (
@@ -145,8 +89,8 @@ async def submit_contact(message: ContactMessage):
     use_tls = os.environ.get("SMTP_USE_TLS", "true").lower() == "true"
 
     if not smtp_host:
-        logger.warning("SMTP_HOST not set; skipping email send but keeping message in DB")
-        return {"success": True, "stored": True, "emailSent": False}
+        logger.error("SMTP_HOST not set; cannot send email")
+        raise HTTPException(status_code=500, detail="Email service not configured")
 
     try:
         with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
@@ -159,7 +103,7 @@ async def submit_contact(message: ContactMessage):
         logger.exception("Failed to send contact email: %s", exc)
         raise HTTPException(status_code=500, detail="Failed to send message")
 
-    return {"success": True, "stored": True, "emailSent": True}
+    return {"success": True, "emailSent": True}
 
 # Include the router in the main app
 app.include_router(api_router)

@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { useToast } from '../hooks/use-toast';
+import SuccessModal from './SuccessModal';
 import { profileData } from '../data/mock';
 
 const Contact = () => {
@@ -16,6 +17,7 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -42,11 +44,7 @@ const Contact = () => {
           throw new Error('Failed to send message');
         }
 
-        toast({
-          title: "Message sent",
-          description: "Thanks for your message. I'll get back to you soon.",
-          duration: 4000,
-        });
+        setShowSuccessModal(true);
 
         setFormData({
           name: '',
@@ -106,6 +104,7 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-20 px-6 bg-zinc-950">
+      <SuccessModal isOpen={showSuccessModal} onClose={() => setShowSuccessModal(false)} />
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">

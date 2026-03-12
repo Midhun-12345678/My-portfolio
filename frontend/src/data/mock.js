@@ -15,7 +15,7 @@ export const profileData = {
 
 export const metricsData = [
   { value: "2", label: "Years Experience" },
-  { value: "5+", label: "Projects Delivered" },
+  { value: "7+", label: "Projects Delivered" },
   { value: "3", label: "Internships" },
   { value: "3", label: "Certifications" }
 ];
@@ -30,7 +30,9 @@ export const skillsData = [
       { name: "TensorFlow", level: 85 },
       { name: "Hugging Face", level: 90 },
       { name: "LLMs", level: 88 },
-      { name: "RAG Systems", level: 85 }
+      { name: "RAG Systems", level: 85 },
+      { name: "LLM Evaluation (LLM-as-Judge)", level: 80 },
+      { name: "Semantic Memory", level: 83 }
     ]
   },
   {
@@ -39,7 +41,11 @@ export const skillsData = [
       { name: "Goal-driven Agents", level: 90 },
       { name: "Avatar Interfaces", level: 80 },
       { name: "Workflow Automation", level: 85 },
-      { name: "Agent Orchestration", level: 82 }
+      { name: "Agent Orchestration", level: 82 },
+      { name: "Multi-Agent Architecture", level: 90 },
+      { name: "CrewAI", level: 88 },
+      { name: "Browser Automation (Playwright)", level: 82 },
+      { name: "Tool Chaining", level: 85 }
     ]
   },
   {
@@ -57,7 +63,9 @@ export const skillsData = [
       { name: "FastAPI", level: 90 },
       { name: "Docker", level: 85 },
       { name: "Google Cloud", level: 80 },
-      { name: "CI/CD", level: 82 }
+      { name: "CI/CD", level: 82 },
+      { name: "Google OAuth Integration", level: 80 },
+      { name: "WebSocket", level: 78 }
     ]
   },
   {
@@ -115,6 +123,19 @@ export const experienceData = [
 
 export const projectsData = [
   {
+    id: 0,
+    title: "Personal AI Automation Agent",
+    description: "A production-grade personal AI assistant built on a multi-tool agentic architecture. Handles email management, calendar scheduling, file I/O, shell execution, and browser automation — all through natural language. Features semantic memory for context recall across sessions, Google OAuth for Gmail and Calendar integration, and a multi-step tool chain that chains actions autonomously.",
+    techStack: ["Python", "FastAPI", "Next.js", "Playwright", "Google OAuth", "CrewAI", "Semantic Memory", "WebSocket", "LlamaIndex"],
+    impact: "Automates email, calendar, files & browser in one unified agent",
+    metrics: "9 integrated tools across memory, browser, files, email and calendar",
+    featured: true,
+    hasDemo: true,
+    demoUrl: "https://personalagent-theta.vercel.app/",
+    githubUrl: "https://github.com/Midhun-12345678/Personal-Agent",
+    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop&q=60"
+  },
+  {
     id: 1,
     title: "Real-Time Fraud Detection API",
     description: "Production-ready fraud detection system with 99%+ accuracy, featuring real-time predictions, RESTful API, transaction history tracking, and model interpretability using SHAP values.",
@@ -135,7 +156,7 @@ export const projectsData = [
     impact: "40% reduction in response time",
     metrics: "Improved task completion by 65%",
     hasDemo: true,
-    demoUrl: "https://multi-agentic-ai-system-8ewvtbmztmvxvrdrpoeccm.streamlit.app/",
+    demoUrl: "https://multi-agentic-ai-system-jwj3.vercel.app/",
     githubUrl: "https://github.com/Midhun-12345678/Multi-Agentic-AI-System",
     image: "https://images.unsplash.com/photo-1694903110330-cc64b7e1d21d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwzfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDB8fHx8MTc2NzMzNTY2MHww&ixlib=rb-4.1.0&q=85",
     featured: true
